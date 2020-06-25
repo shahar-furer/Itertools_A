@@ -1,5 +1,5 @@
 //
-// Created by Theila on 6/15/2020.
+// Created by netanel & Or on 6/15/2020.
 //
 
 #ifndef C___ACCUMULATE_HPP
@@ -12,8 +12,10 @@
 using namespace std;
 
 namespace itertools{
-    struct ADD
+    class ADD
     {
+    public:
+
         template <typename T>
         T operator()(T a, T b) { return a + b;
         }

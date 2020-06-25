@@ -1,5 +1,5 @@
 //
-// Created by Theila on 6/15/2020.
+// Created by netan on 6/15/2020.
 //
 
 #pragma once
@@ -12,6 +12,7 @@ using namespace std;
 namespace itertools {
     template<typename cont, typename cont2>
     class compress {
+        //private:
         cont container;
         cont2 cont_flags;
     public:
@@ -29,11 +30,25 @@ namespace itertools {
 
             auto operator*() {
                 if ((*startF_it)) {
-                    ++(*this);
+                    //++(*this);
                     return *start_it;
                 }
                 return *start_it;
             }
+
+//            iterator &operator++() {
+//                do {
+//                    ++start_it;
+//                    ++startF_it;
+//                } while (start_it != end_it && !(*startF_it));
+//                return *this;
+//            }
+//
+//            const iterator operator++(int) {
+//                iterator tmp = *this;
+//                ++(*this);
+//                return tmp;
+//            }
 
             iterator& operator++(){
                 ++start_it;
@@ -59,7 +74,7 @@ namespace itertools {
             bool operator!=(const iterator &other) const {
                 return (start_it != other.start_it) || (startF_it != other.startF_it);
             }
-        };
+        }; // END OF CLASS ITERATOR
 
         iterator begin() {
             return iterator{container.begin(), container.end(), cont_flags.begin(), cont_flags.end()};
