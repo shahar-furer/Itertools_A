@@ -1,5 +1,5 @@
 //
-// Created by Tehila on 6/15/2020.
+// Created by Theila on 6/15/2020.
 //
 
 #ifndef C___FILTERFALSE_HPP
@@ -16,49 +16,52 @@ namespace itertools{
     {
     private:
         cont container;
-        condi condition;
+        condi if_;
     public:
-        filterfalse(condi co, cont c):container(c),condition(co){}
+        filterfalse(condi co, cont c):container(c),if_(co){}
 
         class iterator {
-            typename cont::iterator start_it;
+            typename cont::iterator start_itert;
             typename cont::iterator end_it;
-            condi condition;
+            condi if_;
         public:
             iterator(typename cont::iterator s_it,typename cont::iterator e_it,condi co):
-                    start_it(s_it),end_it(e_it), condition(co){}
+                    start_itert(s_it),end_it(e_it), if_(co){}
 
-            decltype(*(container.begin())) operator*()  {
-                if(condition(*start_it))
-                    ++(*this);
-                return *start_it;
+            auto operator*()  {
+
+                if(if_(*start_itert)) {
+                    start_itert++;
+                    return *start_itert;
+                }else{
+                }
             }
 
             iterator& operator++() {
-                do {start_it++;}
-                while(start_it!= end_it && condition(*start_it));
+                do {start_itert++;}
+                while(start_itert!= end_it && if_(*start_itert));
                 return *this;
             }
 
             bool operator==(const iterator& other) const {
-                return start_it == other.start_it;
+                return start_itert == other.start_itert;
             }
 
             bool operator!=(const iterator& other) const {
-                return start_it != other.start_it;
+                return start_itert != other.start_itert;
             }
         };
 
         iterator begin() {
-            return iterator{container.begin(),container.end(),condition};
+            return iterator{container.begin(),container.end(),if_};
         }
 
         iterator end() {
-            return iterator{container.end(),container.end(),condition};
+            return iterator{container.end(),container.end(),if_};
         }
     };
 }
 
 
 
-#endif //C___FILTERFALSE_HPP
+#endif

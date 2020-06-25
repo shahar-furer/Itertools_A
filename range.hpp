@@ -1,5 +1,5 @@
 //
-// Created by Tehila on 6/15/2020.
+// Created by Teheila on 6/15/2020.
 //
 
 #ifndef C___RANGE_HPP
@@ -12,56 +12,47 @@
 
     namespace itertools{
         class range{
-            int start_index, end_index ;
+            int s_i, e_i ;
         public:
-            range(int s, int e): start_index(s),end_index(e){}
+            typedef int	value_type;
+            range(int start, int end): s_i(start),e_i(end){}
             class iterator{
             private:
-                int now_index;
+                int index;
 
             public:
 
                 iterator(int c)
-                        : now_index(c) {
+                        : index(c) {
                 }
-                int operator*() const {
-                    return now_index;
+                auto operator*() const {
+                    return index;
                 }
-                iterator& operator++() {
-                    ++this->now_index;
+                auto& operator++() {
+                    ++this->index;
                     return *this;
                 }
                 const iterator operator++(int) {
                     iterator tmp= *this;
-                    ++now_index;
+                    ++index;
                     return tmp;
                 }
                 bool operator==(const iterator& r) const {
-                    return now_index == r.now_index;
+                    return index == r.index;
                 }
                 bool operator!=(const iterator& r) const {
-                    return now_index != r.now_index;
+                    return index != r.index;
                 }
             };  
 
             iterator begin() {
-                return iterator{start_index};
+                return iterator{s_i};
             }
 
             iterator end() {
-                return iterator{end_index};
+                return iterator{e_i};
             }
-//
-//          typename range::iterator range::begin()
-//          {
-//              return iterator{ *this, start_index };
-//          }
-//
-//
-//            typename range::iterator range::end()
-//            {
-//                return iterator{ *this, end_index };
-//            }
+
 
         };
     }

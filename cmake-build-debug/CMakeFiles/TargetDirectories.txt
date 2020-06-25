@@ -1,0 +1,3 @@
+C:/Users/netan/CLionProjects/itertols_tehila/cmake-build-debug/CMakeFiles/itertols_tehila.dir
+C:/Users/netan/CLionProjects/itertols_tehila/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/netan/CLionProjects/itertols_tehila/cmake-build-debug/CMakeFiles/rebuild_cache.dir

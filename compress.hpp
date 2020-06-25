@@ -1,68 +1,72 @@
 //
-// Created by Tehila on 6/15/2020.
+// Created by Theila on 6/15/2020.
 //
 
 #pragma once
 
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 namespace itertools {
     template<typename cont, typename cont2>
     class compress {
-        private:
         cont container;
-        cont2 flags;
+        cont2 cont_flags;
     public:
-        compress(cont c, cont2 f) : container(c), flags(f) {}
+        compress(cont c, cont2 f) : container(c), cont_flags(f) {}
 
         class iterator {
-            typename cont::iterator start1_it;
-            typename cont::iterator end1_it;
-            typename cont2::iterator start2_it;
-            typename cont2::iterator end2_it;
+            typename cont::iterator start_it;
+            typename cont::iterator end_it;
+            typename cont2::iterator startF_it;
+            typename cont2::iterator endF_it;
         public:
             iterator(typename cont::iterator s_it, typename cont::iterator e_it, typename cont2::iterator sF_it,
                      typename cont2::iterator eF_it) :
-                    start1_it(s_it), end1_it(e_it), start2_it(sF_it), end2_it(eF_it) {}
+                    start_it(s_it), end_it(e_it), startF_it(sF_it), endF_it(eF_it) {}
 
-            decltype(*(container.begin())) operator*() {
-                if (!(*start2_it))
+            auto operator*() {
+                if ((*startF_it)) {
                     ++(*this);
-                return *start1_it;
+                    return *start_it;
+                }
+                return *start_it;
             }
 
-            iterator &operator++() {
-                do {
-                    ++start1_it;
-                    ++start2_it;
+            iterator& operator++(){
+                ++start_it;
+                ++startF_it;
+                while((start_it != end_it &&!(*startF_it))) {
+                    ++start_it;
+                    ++startF_it;
                 }
-                while (start1_it != end1_it && !(*start2_it)); // go to index of second container
                 return *this;
             }
 
-            const iterator operator++(int) {
-                iterator tmp = *this;
-                ++(*this);
-                return tmp;
+            const iterator operator++(int){
+                iterator temp = *this;
+                ++start_it;
+                ++startF_it;
+                return temp;
             }
 
             bool operator==(const iterator &other) const {
-                return (start1_it == other.start1_it) && (start2_it == other.start2_it);
+                return (start_it == other.start_it) && (startF_it == other.startF_it);
             }
 
             bool operator!=(const iterator &other) const {
-                return (start1_it != other.start1_it) || (start2_it != other.start2_it);
+                return (start_it != other.start_it) || (startF_it != other.startF_it);
             }
-        }; 
+        };
 
         iterator begin() {
-            return iterator{container.begin(), container.end(), flags.begin(), flags.end()};
+            return iterator{container.begin(), container.end(), cont_flags.begin(), cont_flags.end()};
         }
 
         iterator end() {
-            return iterator{container.end(), container.end(), flags.end(), flags.end()};
+            return iterator{container.end(), container.end(), cont_flags.end(), cont_flags.end()};
         }
     };
 }
